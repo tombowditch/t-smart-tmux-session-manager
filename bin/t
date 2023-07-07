@@ -127,10 +127,9 @@ zoxide add "$RESULT" &>/dev/null # add to zoxide database
 FOLDER=$(basename "$RESULT")
 
 # figure out whether folder is a git repo
-GIT_DIR=$(git -C "$RESULT" rev-parse --show-toplevel 2>/dev/null)
-GIT_DIR_EXIT_CODE=$?
+GIT_DIR="$RESULT/.git"
 
-if [ $GIT_DIR_EXIT_CODE -eq 0 ]; then # git repo found
+if [ -d "$GIT_DIR" ]; then # git repo found
   ORIGIN_URL=$(git -C "$RESULT" config --get remote.origin.url)
   ORIGIN_NAME=$(basename -s .git "$ORIGIN_URL")
 
